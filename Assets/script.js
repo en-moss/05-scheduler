@@ -1,26 +1,34 @@
+let now = moment().format('H');
+let hourBlock = $('.textarea');
+
 $('#currentDay').text(moment().format('dddd, MMMM Do'));
 
-$('button').click (function(e) {
-    saveTask(e);
-})
+$('button').on('click', saveTask)
 
-function saveTask(e) {
-    let saveButton = e.target
-    let task = saveButton.previousElementSibling
-    const toDo = {
-        hour: saveButton.id,
-        task: task.value
-    };
-    
-    if (JSON.parse(localStorage.getItem('tasks')) == null) {
-        localStorage.setItem('tasks', '[]');
+function popTask() {
+    for (var i = 0; i < hourBlock.length; i++) {
+
     }
-
-    let taskArr = JSON.parse(localStorage.getItem('tasks'));
-    taskArr.push(toDo);
-    localStorage.setItem('tasks', JSON.stringify(taskArr));
 }
 
-// function renderTask() {
+function saveTask() {
+    let key = $(this).attr('id')
+    let task = $(this).parent().children('input').val()
+    localStorage.setItem(key, task);
+}
 
-// }
+function timeKeep() {
+    for (var i = 0; i < hourBlock.length; i++) {
+        if (now < parseInt($(hourBlock[i]).attr('data-time'))) {
+            $(hourBlock[i]).addClass('future')
+        }
+        else if (now > parseInt($(hourBlock[i]).attr('data-time'))) {
+            $(hourBlock[i]).addClass('past')
+        }
+        else {
+            $(hourBlock[i]).addClass('present')
+        }
+    }
+}
+
+$(document).ready(timeKeep)
