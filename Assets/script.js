@@ -5,6 +5,8 @@ $('#currentDay').text(moment().format('dddd, MMMM Do'));
 
 $('button').on('click', saveTask)
 
+let test = localStorage.getItem('9')
+
 function popTask() {
     for (var i = 0; i < hourBlock.length; i++) {
 
@@ -12,6 +14,11 @@ function popTask() {
 }
 
 function saveTask() {
+    let icon = $(this).children('i')
+    icon.removeClass('fa-solid').addClass('fa-regular');
+    setTimeout(function(){
+        icon.removeClass('fa-regular').addClass('fa-solid');
+    },350);
     let key = $(this).attr('id')
     let task = $(this).parent().children('input').val()
     localStorage.setItem(key, task);
